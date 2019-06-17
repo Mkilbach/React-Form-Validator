@@ -1,0 +1,23 @@
+label {
+    display: inline-block;
+}
+
+p {
+    margin: 0;
+}
+
+.error {
+    background: rgba(red, .6);
+
+    input {
+        border-color: rgba(red, .6);
+    }
+}
+
+.success {
+    background: rgba(green, .6);
+
+    input {
+        border-color: rgba(green, .6);
+    }
+}

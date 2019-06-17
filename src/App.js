@@ -1,24 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import Input from "./components/FormValidator/Input";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Input id={'id'} name={'name'} max={7} type={'checkbox'} defaultValue={3} title={'title'} rule={'select'} inputOptions={[[1, 2], 3, 4, [5, 6]]} required={true} errorText={'only numbers allowed'} />
     </div>
   );
 }
