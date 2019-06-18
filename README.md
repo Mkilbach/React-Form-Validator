@@ -1,68 +1,127 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Form Validator v0.1 :ocean: :fire:
 
-## Available Scripts
+React Form Validator is a library allowing to create controlled in JSX with no DOM structure restrictions.
 
-In the project directory, you can run:
+## instalation
 
-### `npm start`
+TBA
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Usage
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Import these components
+```
+import { Form, Link } from path/formValidator
+```
 
-### `npm test`
+`Form` is a wrapping component. All your inputs must be inserted inside.
+```
+return (
+    <Form>
+        <h2>Form</h2>
+        <Input />
+        <Input />
+        <Input />
+    </Form>
+)
+```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`Input` component in its basic form returns:
+```
+<label>
+    <p>title</p>
+    <input>
+    <p>error<p>
+</label>
+``` 
 
-### `npm run build`
+Alternatively you can define your own children structure just by inserting your DOM elements inside `Input` compnent, however this method is suggested to be used `only with radio elements`.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Form props
+All props are optional.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+* **onSubmit**: will execute on form submit only after validation has passed. Gets form values object as an argument.
+    ```
+        <Form onSubmit={result => customSubmit(result)}>
+            ...
+        </Form>
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* **onFailure**: will execute on form submit only after validation has *not* passed.
+* **requiredErrorText**: passed string will be displayed after validation for all required inputs that are empty
+* **id**: form ID
+* **className**: form class
 
-### `npm run eject`
+## Input props
+All props except **id** are optional.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* **id**: is `required` and must be `unique`
+* **name**: adds [name](https://www.w3schools.com/TAGS/att_input_name.asp) attribute. **Required if you want to pass this input value to onSubmit result object**
+* **required**: decides whether input should be validated by default no matter its value or not
+* **readonly**: adds [readonly](https://www.w3schools.com/tags/att_input_readonly.asp) attribute
+* **disabled**: adds [disabled](https://www.w3schools.com/tags/att_input_disabled.asp) attribute
+* **rule**: decides the validation rule for the input ([available rules list](#validation-rules))
+* **title**: recieves string for title above the input element
+* **confirmPrefix**: recieves string that is placed before confirm input title 
+* **placeholder**: adds [placeholder](https://www.w3schools.com/tags/att_input_placeholder.asp) attribute
+* **type**: adds [type](https://www.w3schools.com/html/html_form_input_types.asp) attribute ([supported types list](#supported-input-types))
+* **errorText**: string that will show as an error message for this input
+* **minErrorText**: string that will show as an error message for this input when value shorter than minimum length
+* **value**: initial value for that input
+* **min**: minimum length for input value
+* **max**: maximum length for input value
+* **inputClass**: class name that will be added to input element
+* **errorClass**: class name that will be added to error element
+* **labelClass**: class name that will be added to label element
+* **onBeforeChange**: executed right before the input is changed
+* **onAfterChange**: executed after the input is changed
+* **onFocus**: executed when the input is focused
+* **onBlur**: executed when the input is blurred
+* **inputOptions**: only works with and **is required for radio and select type**. You can pass array cointaining available options for that input. Option can be either string (when value and name are the same) or array with two values - option value and option name.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    ```
+    <Input inputOptions={[['value', 'name'], 'value same as name']} />
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* **group**: allows to group results of submitted form object into groups
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    #### JSX:
+    ```
+    <Form>
+        <Input name={'groupElement1'} group={'group'} value={1} />
+        <Input name={'groupElement2'} group={'group'} value={2} />
+        <Input name={'element'} value={0} />
+    <Form />
+    ```
 
-## Learn More
+    #### Result:
+    ```
+    {
+        group: {
+            groupElement1: 1,
+            groupElement2: 2
+        },
+        element: 0
+    }
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Supported input types
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* text
+* number
+* email
+* phone
+* select
+* radio
+* checkbox
+* hidden
 
-### Code Splitting
+## Validation rules
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* **text** - any string
+* **letters** - only letters and spaces allowed
+* **number** - only numbers available with no whitespaces
+* **email** - passes only with proper email address given
+* **zip-code** - only numbers with optional hyphen
+* **phone** - only numbers with optional hyphens and spaces
+* **confirm** - creates two inputs that must contain same values to pass
+* **select/radio/checkbox** - checks if option is selected/checked

@@ -31,6 +31,9 @@ export default class Input extends Component {
             this.setState({ validate: true });
             this.validateField();
         }
+
+        console.log('update');
+        
     }
 
     recursiveSearchInputs = children => {
@@ -248,7 +251,7 @@ export default class Input extends Component {
                         {title && type !== 'checkbox' && <p className={'validatedInput__title'}>{title}</p>}
                         {this.generateField()}
                         {title && type === 'checkbox' && <span className={'validatedInput__title'}>{title}</span>}
-                        {validate && !valid && errorText && <p className={'validatedInput__error' + (errorClass ? ' ' + errorClass : '')}>{errorText}</p>}
+                        {validate && !valid && !disabled && errorText && <p className={'validatedInput__error' + (errorClass ? ' ' + errorClass : '')}>{errorText}</p>}
                     </label>
                 )
         )

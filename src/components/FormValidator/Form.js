@@ -23,7 +23,7 @@ export default class Form extends Component {
         const { validateAll } = this.state;
         let valid = true;
 
-        inputs.forEach(el => !el.current.state.valid && (valid = false));
+        inputs.forEach(el => {if(!el.current.state.valid && !el.current.props.disabled) valid = false});
 
         if (valid) {
             const { inputsRefs } = this.state;
@@ -39,9 +39,11 @@ export default class Form extends Component {
             });
 
             // INVOKE FUN PASSED TO FORM COMPONENT WITH RESULT AS ARGUMENT
+            console.log('success!');
             const { onSubmit } = this.props;
             onSubmit && onSubmit(result);
         } else {
+            console.log('failure!');
             !validateAll && this.setState({ validateAll: true });
             this.setState({ childrenWithProps: await this.cloneChildrenWithProps() });
         }
