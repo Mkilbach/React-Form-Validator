@@ -23,7 +23,7 @@ export default class Form extends Component {
         const { validateAll } = this.state;
         let valid = true;
 
-        inputs.forEach(el => {if(!el.current.state.valid && !el.current.props.disabled) valid = false});
+        inputs.forEach(el => { if (!el.current.state.valid && !el.current.props.disabled) valid = false });
 
         if (valid) {
             const { inputsRefs } = this.state;
@@ -38,19 +38,22 @@ export default class Form extends Component {
                 }
             });
 
-            // INVOKE FUN PASSED TO FORM COMPONENT WITH RESULT AS ARGUMENT
-            console.log('success!');
             const { onSubmit } = this.props;
             onSubmit && onSubmit(result);
         } else {
-            console.log('failure!');
             !validateAll && this.setState({ validateAll: true });
             this.setState({ childrenWithProps: await this.cloneChildrenWithProps() });
+            const { onFailure } = this.props;
+            onFailure && onFailure();
         }
     }
 
     async componentDidMount() {
         this.setState({ childrenWithProps: await this.cloneChildrenWithProps() });
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (prevProps !== this.props) this.setState({ childrenWithProps: await this.cloneChildrenWithProps() });
     }
 
     cloneChildrenWithProps = async () => {
@@ -80,9 +83,9 @@ export default class Form extends Component {
     }
 
     render() {
-
+        const { id, className } = this.props;
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} id={id} className={className}>
                 {this.state.childrenWithProps}
             </form>
         )

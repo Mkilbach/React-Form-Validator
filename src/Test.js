@@ -19,7 +19,8 @@ export default class Test extends Component {
                     </h2>
                         <div>
                             <Input id={'id'} name={'name'} max={7} checked={false} group={'test'} type={'checkbox'} title={'title'} rule={'select'} inputOptions={[[1, 2], 3, 4, [5, 6]]} required={true} errorText={'only numbers allowed'} />
-                            <Input name={'name2'} type={'text'} title={'title'} rule={'text'} required={true} disabled={this.state.test} />
+                            {this.state.test && 
+                            <Input name={'name2'} type={'text'} title={'title'} rule={'text'} required={true}/>}
                         </div>
                     </div>
                     <div>

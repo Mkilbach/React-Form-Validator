@@ -1,4 +1,4 @@
-# React Form Validator v0.1 :ocean: :fire:
+# React Form Validator v0.2 :ocean: :fire:
 
 React Form Validator is a library allowing to create controlled in JSX with no DOM structure restrictions.
 

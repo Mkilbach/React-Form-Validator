@@ -31,9 +31,6 @@ export default class Input extends Component {
             this.setState({ validate: true });
             this.validateField();
         }
-
-        console.log('update');
-        
     }
 
     recursiveSearchInputs = children => {
