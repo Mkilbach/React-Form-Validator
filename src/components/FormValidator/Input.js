@@ -7,7 +7,7 @@ import './input.scss'
 
 export default class Input extends Component {
     static propTypes = {
-        // name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired
     }
 
     state = {
@@ -24,6 +24,13 @@ export default class Input extends Component {
 
         const { value } = this.state;
         if (value) this.validateField();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.validateAll !== this.props.validateAll && this.props.validateAll) {
+            this.setState({ validate: true });
+            this.validateField();
+        }
     }
 
     recursiveSearchInputs = children => {
@@ -100,8 +107,6 @@ export default class Input extends Component {
     validateMinLength = () => {
         const { min, minErrorText, rule } = this.props;
         const { value, confirmValue } = this.state;
-        console.log(value, min);
-        
         if (!min || (value.toString().length >= min && ((rule === 'confirm' && confirmValue.toString().length >= min) || rule !== 'confirm'))) {
             this.setState({ errorText: '' })
             return true;
@@ -159,8 +164,8 @@ export default class Input extends Component {
                 type={type}
                 maxLength={max}
                 className={'validatedInput__input' + (inputClass ? ' ' + inputClass : '')}
-                value={value}
-                checked={value}
+                value={value ? value : ''}
+                checked={value ? value : false}
                 onChange={this.handleChange}
                 onBlur={this.onBlur}
                 onFocus={this.onFocus}
