@@ -1,15 +1,10 @@
-const validate = (rule, value, value2) => {
+const validate = (rule, value, value2, min) => {
     let result = false;
     let regex;
 
     switch (rule) {
         case 'text':
             regex = /.*[^ ].*/;
-            result = regex.test(String(value).toLowerCase());
-            break;
-
-        case 'letters':
-            regex = /^[a-zA-Z\s]*$/;
             result = regex.test(String(value).toLowerCase());
             break;
 
@@ -24,7 +19,7 @@ const validate = (rule, value, value2) => {
             break;
 
         case 'zip-code':
-            regex = /^[0-9]+(-[0-9]+)$/;
+            regex = /[\d -]+/;
             result = regex.test(String(value).toLowerCase());
             break;
 
@@ -35,6 +30,12 @@ const validate = (rule, value, value2) => {
 
         case 'confirm':
             result = value === value2 ? true : false;
+            break;
+
+        case 'password':
+            const regexString = '(?=^.{' + min + ',}$)(?=.*\\d)(?=.*[A-Z])(?=.*[a-z]).*$';
+            regex = new RegExp(regexString);
+            result = regex.test(String(value));
             break;
 
         case 'select':

@@ -1,0 +1,32 @@
+.rfv-validatedInput {
+    $main: &;
+    display: inline-block;
+    width: 100%;
+    
+    input:not([type=checkbox]):not([type=radio]), select {
+        width: 100%;
+    }
+
+    &:not(.rfv-validatedInput--checkbox):not(.rfv-validatedInput--radio):not(.rfv-validatedInput--hidden) {
+        min-height: 55px;
+    }
+
+    &__custom-checkbox {
+        display: inline;
+    }
+
+    &__error {
+        color: red;
+    }
+}
+
+.rfv-recaptcha-info {
+    margin: 10px 0;
+    color: #aaa;
+    font-size: 12px;
+
+    a, a:link, a:visited, a:hover, a:active {
+        color: #999;
+        text-decoration: underline
+    }
+}
